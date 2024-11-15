@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Add grid styles */
+        .grid-container, .grid-container2 {
+            display: flex;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 10px;
+            gap: 10px;
+        }
+
+
+        .grid-container::-webkit-scrollbar {
+            display: none;
+        }
+        .grid-item {
+            min-width: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .grid-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h3, h2 {
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+
+
+        .navbar {
+            list-style-type: none; /* Remove bullet points */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Align items in a row */
+            background-color: #333; /* Background color */
+        }
+        .navbar li {
+            padding: 14px 20px; /* Padding for each item */
+        }
+        .navbar a {
+            color: white; /* Text color */
+            text-decoration: none; /* Remove underline */
+            display: block; /* Make the link fill the list item */
+        }
+        .navbar a:hover {
+            background-color: #575757; /* Change background on hover */
+        }

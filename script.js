@@ -7,7 +7,7 @@ async function generateImage() {
     generateButton.textContent = "Loading...";
     generateButton.disabled = true;
 
-    const prompt = `3D animation, a ${character} holding a cake named "${name}", attractive scenery in the background.`;
+    const prompt = `3D animation, a ${character} holding a cake named "${name}", attractive scenery in the background. ${name} name is a most important, party_hat, food, cake, candle, balloon, birthday_cake, outdoors, birthday hat, smile, day, confetti, water, grass, sky, reflection, blue_sky`;
     console.log("Generated Prompt:", prompt);
 
     const imageContainer = document.getElementById('imageContainer');
