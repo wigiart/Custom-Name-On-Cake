@@ -70,53 +70,50 @@ async function generateImage() {
     }
 }
 
+// Function to check if the user is in an in-app browser
+function isInAppBrowser() {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    return /Instagram|FBAN|FBAV|Twitter/i.test(userAgent);
+}
+
 // Function to display the image and handle download
 function displayImage(url) {
-    // Display the generated image
     const imageContainer = document.getElementById('imageContainer');
     imageContainer.innerHTML = `<img src="${url}" alt="Generated Image" id="generatedImage">`;
 
-    // Update the download button and show it
     const downloadButton = document.getElementById('downloadButton');
     downloadButton.style.display = 'inline-block';
 
-    // Force download on button click
     downloadButton.onclick = async function(event) {
-        event.preventDefault(); // Prevent default behavior
+        event.preventDefault();
 
-        try {
-            // Check if the browser supports `download` attribute
-            const supportsDownload = 'download' in downloadButton;
-
-            if (supportsDownload) {
-                // Fetch the image as a Blob
+        if (isInAppBrowser()) {
+            alert("Downloads are not supported in in-app browsers like Instagram. Please open this page in your device's default browser.");
+            const externalBrowserButton = document.createElement('button');
+            externalBrowserButton.textContent = 'Open in External Browser';
+            externalBrowserButton.style.marginTop = '10px';
+            externalBrowserButton.onclick = () => window.open(url, '_blank');
+            imageContainer.appendChild(externalBrowserButton);
+        } else {
+            try {
                 const response = await fetch(url);
                 const blob = await response.blob();
 
-                // Create a temporary URL for the Blob
                 const blobUrl = URL.createObjectURL(blob);
 
-                // Create a hidden link element
                 const tempLink = document.createElement('a');
                 tempLink.href = blobUrl;
-                tempLink.download = 'your_name_on_cake.png'; // Filename for the downloaded file
+                tempLink.download = 'your_name_on_cake.png';
 
-                // Trigger the download
                 document.body.appendChild(tempLink);
                 tempLink.click();
                 document.body.removeChild(tempLink);
 
-                // Revoke the temporary URL to free memory
                 URL.revokeObjectURL(blobUrl);
-            } else {
-                // If download is not supported, open in a new browser window
+            } catch (error) {
+                console.error("Download failed:", error);
                 window.open(url, '_blank');
             }
-        } catch (error) {
-            console.error("Download failed:", error);
-
-            // As a fallback, always open in a new browser window
-            window.open(url, '_blank');
         }
     };
 }
