@@ -7,7 +7,7 @@ async function generateImage() {
     generateButton.textContent = "Loading...";
     generateButton.disabled = true;
 
-    const prompt = `3D animation, a ${character} holding a cake named "${name}", attractive scenery in the background. ${name} name is a most important, party_hat, food, cake, candle, balloon, birthday_cake, outdoors, birthday hat, smile, day, confetti, water, grass, sky, reflection, blue_sky`;
+    const prompt = `3D animation, a cute ${character} holding a cake named "${name}", attractive scenery in the background. ${name} name is a most important, party_hat, food, cake, candle, balloon, birthday_cake, outdoors, birthday hat, smile, day, confetti, water, grass, sky, reflection, blue_sky`;
     console.log("Generated Prompt:", prompt);
 
     const imageContainer = document.getElementById('imageContainer');
@@ -70,7 +70,7 @@ async function generateImage() {
     }
 }
 
-// New function to display the image and handle download
+// Function to display the image and handle download
 function displayImage(url) {
     // Display the generated image
     const imageContainer = document.getElementById('imageContainer');
@@ -78,15 +78,47 @@ function displayImage(url) {
 
     // Update the download button and show it
     const downloadButton = document.getElementById('downloadButton');
-    downloadButton.href = url;
     downloadButton.style.display = 'inline-block';
 
-    // Fallback for browsers that don’t support `download` attribute
-    downloadButton.onclick = function(event) {
-        // Check if the browser supports the download attribute
-        if (!downloadButton.download) {
-            event.preventDefault(); // Prevent default link action
-            window.open(url, '_blank'); // Open image in a new tab
+    // Force download on button click
+    downloadButton.onclick = async function(event) {
+        event.preventDefault(); // Prevent default behavior
+
+        try {
+            // Fetch the image as a Blob
+            const response = await fetch(url);
+            const blob = await response.blob();
+
+            // Create a temporary URL for the Blob
+            const blobUrl = URL.createObjectURL(blob);
+
+            // Create a hidden link element
+            const tempLink = document.createElement('a');
+            tempLink.href = blobUrl;
+            tempLink.download = 'your_name_on_cake.png'; // Filename for the downloaded file
+
+            // Trigger the download
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+
+            // Revoke the temporary URL to free memory
+            URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error("Download failed:", error);
+
+            // Fallback for unsupported browsers
+            const userChoice = confirm("Your browser does not fully support downloads. Would you like to open the image in an external browser?");
+            if (userChoice) {
+                window.open(url, '_blank');
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert("Image link copied to clipboard! You can paste it in a browser to download.");
+                }).catch(err => {
+                    console.error("Failed to copy link to clipboard: ", err);
+                    alert("Could not copy the link. Please try manually opening the image.");
+                });
+            }
         }
     };
 }

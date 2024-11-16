@@ -3,6 +3,37 @@ body {
     padding: 0;
 }
 
+.navbar-List {
+    list-style-type: none; /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Align items in a row */
+    background-color: #333; /* Background color */
+}
+.navbar-List li {
+    padding: 14px 20px; /* Padding for each item */
+}
+.navbar-List a {
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make the link fill the list item */
+}
+.navbar-List a:hover {
+    background-color: #575757; /* Change background on hover */
+}
+input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.titles {
+    margin-left: 10px;
+}
+
 /* Add grid styles */
         .grid-container, .grid-container2 {
             display: flex;
@@ -12,8 +43,6 @@ body {
             padding: 10px;
             gap: 10px;
         }
-
-
         .grid-container::-webkit-scrollbar {
             display: none;
         }
@@ -31,24 +60,4 @@ body {
         h3, h2 {
             margin-top: 10px;
             margin-bottom: 8px;
-        }
-
-
-        .navbar {
-            list-style-type: none; /* Remove bullet points */
-            margin: 0;
-            padding: 0;
-            display: flex; /* Align items in a row */
-            background-color: #333; /* Background color */
-        }
-        .navbar li {
-            padding: 14px 20px; /* Padding for each item */
-        }
-        .navbar a {
-            color: white; /* Text color */
-            text-decoration: none; /* Remove underline */
-            display: block; /* Make the link fill the list item */
-        }
-        .navbar a:hover {
-            background-color: #575757; /* Change background on hover */
         }
